@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit';
-import { ref } from 'lit/directives/ref';
 import { map } from 'lit/directives/map';
 import { customElement, state } from 'lit/decorators';
 
@@ -33,8 +32,7 @@ export class SearchBar extends LitElement {
     protected autocomplete_options = [];
 
     input_field() {
-        return html`<input ${ref(this.fetch_autocomplete_options)} @input="${this.fetch_autocomplete_options}"
-            id="query" name="query" list="ac-datalist" type="search" autocomplete="off" value="">`
+        return html`<input @input="${this.fetch_autocomplete_options}" id="query" name="query" list="ac-datalist" type="search" autocomplete="off" value="">`
     }
 
 
@@ -62,9 +60,10 @@ export class SearchBar extends LitElement {
         `
     }
 
-    fetch_autocomplete_options(input?: Element) {
-        let query: string;
-        if (query = (input as HTMLInputElement)?.value) {
+    fetch_autocomplete_options(event?: InputEvent) {
+        const input = event?.target as HTMLInputElement;
+        const query = input?.value;
+        if (query) {
             fetch(`/complete?q="${encodeURIComponent(query)}"`)
                 .then(res => {
                     console.debug(`completion of "${query}" took ${res.headers.get("x-response-time")}`)

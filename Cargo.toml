@@ -3,8 +3,6 @@ name = "trends-autocomplete-poc"
 version = "0.1.0"
 edition = "2021"
 
-build = "build.rs"
-
 [dependencies]
 csv-async = { version = "1.2.4", default-features = false, features = ["tokio", "itoa", "with_serde"] }
 derive_more = { version = "0.99.17", default-features = false, features = ["deref", "deref_mut"] }

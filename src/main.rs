@@ -4,7 +4,9 @@ use itertools::Itertools;
 use rocket::{
     fairing::AdHoc,
     fs::FileServer,
-    get, routes,
+    get,
+    http::Status,
+    routes,
     serde::{json::Json, Deserialize},
     State,
 };
@@ -65,9 +67,14 @@ async fn main() -> Result<(), rocket::Error> {
         .attach(tantivy_setup_fairing())
         .attach(load_data_fairing())
         .attach(RequestTimer)
-        .mount("/", routes![complete])
+        .mount("/", routes![complete, healthcheck])
         .mount("/", FileServer::from("dist"));
     let _rocket = rocket.launch().await?;
 
     Ok(())
+}
+
+#[get("/healthz")]
+fn healthcheck() -> Status {
+    Status::Ok
 }

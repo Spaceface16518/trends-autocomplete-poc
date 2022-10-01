@@ -3,7 +3,3 @@ data_dir = "utd-grades/raw_data/"
 
 [debug]
 log_level = "debug"
-
-[release]
-index_dir = "index"
-

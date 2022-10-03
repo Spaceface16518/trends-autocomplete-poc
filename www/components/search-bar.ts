@@ -64,7 +64,7 @@ export class SearchBar extends LitElement {
         const input = event?.target as HTMLInputElement;
         const query = input?.value;
         if (query) {
-            fetch(`/complete?q="${encodeURIComponent(query)}"`)
+            fetch(`/complete?q=${encodeURIComponent(query)}`)
                 .then(res => {
                     console.debug(`completion of "${query}" took ${res.headers.get("x-response-time")}`)
                     return res.json()

@@ -68,7 +68,8 @@ async fn main() -> Result<(), rocket::Error> {
         .attach(load_data_fairing())
         .attach(RequestTimer)
         .mount("/", routes![complete, healthcheck])
-        .mount("/", FileServer::from("dist"));
+        .mount("/", FileServer::from("dist"))
+        .mount("/static", FileServer::from("static").rank(20));
     let _rocket = rocket.launch().await?;
 
     Ok(())
